@@ -1,0 +1,42 @@
+﻿#linkprinc {
+    background-image: linear-gradient(to bottom, rgba(248,244,248,1), rgba(208,200,222,1));
+    color: black;
+    border-radius: 20px;
+}
+
+#linkprinc:hover {
+        Text-Decoration: None;        
+        background-image: linear-gradient(to bottom, rgba(208,204,208,1), rgba(168,160,182,1));
+    }
+
+li:hover {
+    color: white;
+    background-color: rgb(22,63,127);
+    border: none;
+}
+
+#liPrinc:hover {
+    background-color: transparent;
+    
+}
+
+#sair:hover, #sair a:focus {
+    background-color: rgb(150,20,57);
+}
+
+.dropdown-toggle {
+    text-decoration: none;
+}
+
+#btnmenu, #navb {
+    border: none;
+}
+
+#navbarSupportedContentP ul li a, #navbarSupportedContentP ul li div a {
+    font-size: 10px;
+}
+
+#navb, #faixalogin {
+    background-image: linear-gradient(to bottom, rgba(60,123,167,1), rgba(22,63,127,1));
+    color: white;
+}
