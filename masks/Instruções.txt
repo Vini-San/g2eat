@@ -1,0 +1,10 @@
+1 - instale o xampp
+2 - altere o arquivo C:\Windows\System32\drivers\etc\hosts pelo arquivo hosts que está na pasta masks
+3 - altere o arquivo C:\xampp\apache\conf\extra\httpd-vhosts.conf pelo arquivo httpd-vhosts que está na pasta masks
+4 - no painel inicial do xampp dê um start no apache e no mysql.
+Se eles já estavam rodando que foi feita a alteração acima, clique em stop, aguarde alguns segundos e dê start novamente
+
+
+
+Depois dos procedimentos acima:
+1 - A aplicação vai rodar no seu navegador com a seguinte máscara: http://www.big_bencao.com
