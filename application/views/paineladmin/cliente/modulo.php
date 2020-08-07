@@ -134,26 +134,31 @@ getMsg('msgCadastro');
 						<input type="text" class="form-control" placeholder="Digite um Celular" name="celular" value="<?= set_value('celular'); ?>">
 					</div>
 					<label class="col-sm-2 col-form-label">CEP</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" placeholder="Digite um CEP" name="cep" value="<?= set_value('cep'); ?>">
+					<div class="col-sm-2">
+						<input type="text" class="form-control" placeholder="Digite um CEP" name="cep" id="cep" value="<?= set_value('cep'); ?>">
+					</div>
+					<div class="col-sm-2">
+						
+						<!-- <a title="Buscar Endereço" class="btn btn-primary" onblur="pesquisacep(this.value);">Buscar</a> -->
+						<a href="#" title="Buscar Endereço" class="btn btn-primary" onclick="pesquisacep();">Buscar</a>
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Logradouro</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" placeholder="Digite um Logradouro" name="logradouro" value="<?= set_value('logradouro'); ?>">
+						<input type="text" class="form-control" placeholder="Digite um Logradouro" name="logradouro" id="logradouro" value="<?= set_value('logradouro'); ?>">
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Numero</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" placeholder="Digite um Numero" name="numero" value="<?= set_value('numero'); ?>">
+						<input type="text" class="form-control" placeholder="Digite um Numero" name="numero" id="numero" value="<?= set_value('numero'); ?>">
 					</div>
 					<label class="col-sm-2 col-form-label">Complemento</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" placeholder="Digite um Complemento" name="complemento" value="<?= set_value('complemento'); ?>">
+						<input type="text" class="form-control" placeholder="Digite um Complemento" name="complemento" id="complemento" value="<?= set_value('complemento'); ?>">
 					</div>
 				</div>
 
@@ -162,11 +167,11 @@ getMsg('msgCadastro');
 				<div class="form-group row">
 					<label class="col-sm-2 col-form-label">Cidade</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" placeholder="Digite uma Cidade" name="cidade" value="<?= set_value('cidade'); ?>">
+						<input type="text" class="form-control" placeholder="Digite uma Cidade" name="cidade" id="cidade" value="<?= set_value('cidade'); ?>">
 					</div>
 					<label class="col-sm-2 col-form-label">UF</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" placeholder="Digite uma UF" name="uf" value="<?= set_value('uf'); ?>">
+						<input type="text" class="form-control" placeholder="Digite uma UF" name="uf" id="uf" value="<?= set_value('uf'); ?>">
 					</div>
 				</div>
 				<div class="form-group d-flex justify-content-end">
