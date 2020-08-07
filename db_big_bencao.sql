@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.13-MariaDB - mariadb.org binary distribution
--- OS do Servidor:               Win64
--- HeidiSQL Versão:              11.0.0.5919
+-- Versão do servidor:           10.1.37-MariaDB - mariadb.org binary distribution
+-- OS do Servidor:               Win32
+-- HeidiSQL Versão:              10.1.0.5464
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,15 +20,9 @@ USE `bigbenca_bigbencao`;
 CREATE TABLE IF NOT EXISTS `company` (
   `id_company` int(11) NOT NULL AUTO_INCREMENT,
   `nome_company` varchar(255) DEFAULT NULL,
-  `logradouro` varchar(255) DEFAULT NULL,
-  `numero` varchar(255) DEFAULT NULL,
-  `complemento` varchar(255) DEFAULT NULL,
-  `cidade` varchar(255) DEFAULT NULL,
-  `uf` varchar(255) DEFAULT NULL,
-  `cep` varchar(255) DEFAULT NULL,
-  `dt_cadastro` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_company`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bigbenca_bigbencao.company: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
@@ -48,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `company_tel` (
   PRIMARY KEY (`id_company_tel`) USING BTREE,
   KEY `fk_company_tel_company` (`idcompany`) USING BTREE,
   CONSTRAINT `fk_company_tel_company` FOREIGN KEY (`idcompany`) REFERENCES `company` (`id_company`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bigbenca_bigbencao.company_tel: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `company_tel` DISABLE KEYS */;
@@ -60,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
   `name` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- Copiando dados para a tabela bigbenca_bigbencao.groups: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
@@ -88,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `tb_balancete` (
   `id_balancete` int(11) NOT NULL AUTO_INCREMENT,
   `id_pedido` int(11) NOT NULL,
   `id_tipomovimento` int(11) NOT NULL,
-  `valor` double NOT NULL DEFAULT 0,
+  `valor` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_balancete`),
   KEY `id_pedido` (`id_pedido`),
   KEY `id_tipomovimento` (`id_tipomovimento`),
@@ -106,23 +100,21 @@ CREATE TABLE IF NOT EXISTS `tb_endereco` (
   `logradouro` varchar(255) DEFAULT NULL,
   `numero` varchar(255) DEFAULT NULL,
   `complemento` varchar(255) DEFAULT NULL,
+  `bairro` varchar(255) DEFAULT NULL,
   `cidade` varchar(255) DEFAULT NULL,
   `uf` varchar(255) DEFAULT NULL,
   `cep` varchar(255) DEFAULT NULL,
-  `dt_cadastro` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `id_user` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id_endereco`) USING BTREE,
-  KEY `id_user` (`id_user`),
-  CONSTRAINT `tb_endereco_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`)
+  `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_endereco`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bigbenca_bigbencao.tb_endereco: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `tb_endereco` DISABLE KEYS */;
-INSERT INTO `tb_endereco` (`id_endereco`, `logradouro`, `numero`, `complemento`, `cidade`, `uf`, `cep`, `dt_cadastro`, `id_user`) VALUES
-	(1, 'Rua tal del longe de algum lugar', '213', 'fundos', 'Rio', 'RJ', '4984984', '2020-07-30 10:56:19', 13),
-	(5, 'Rua nova', '100', 'frente', 'Rio de Janeiro', 'RJ', '', '2020-07-30 10:56:34', 13),
-	(6, 'Rua nova', '', 'lote 13', '', '', '', '2020-07-30 10:58:19', 13),
-	(8, 'Rua Exemplo', '1', '', 'Rio de Janeiro', 'RJ', '2075601', '2020-07-30 16:34:00', 14);
+INSERT INTO `tb_endereco` (`id_endereco`, `logradouro`, `numero`, `complemento`, `bairro`, `cidade`, `uf`, `cep`, `dt_cadastro`) VALUES
+	(1, 'Rua tal del longe de algum lugar', '213', 'fundos', NULL, 'Rio', 'RJ', '4984984', '2020-07-30 10:56:19'),
+	(5, 'Rua nova', '100', 'frente', NULL, 'Rio de Janeiro', 'RJ', '', '2020-07-30 10:56:34'),
+	(6, 'Rua nova', '', 'lote 13', NULL, '', '', '', '2020-07-30 10:58:19'),
+	(8, 'Rua Exemplo', '1', '', NULL, 'Rio de Janeiro', 'RJ', '2075601', '2020-07-30 16:34:00');
 /*!40000 ALTER TABLE `tb_endereco` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bigbenca_bigbencao.tb_nivel_usuario
@@ -160,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `tb_pedido` (
   CONSTRAINT `tb_pedido_ibfk_3` FOREIGN KEY (`id_situacao_financeira`) REFERENCES `tb_situacao_financeira` (`id_situacao_financeira`),
   CONSTRAINT `tb_pedido_ibfk_4` FOREIGN KEY (`id_tipo_pedido`) REFERENCES `tb_tipo_pedido` (`id_tb_tipo_pedido`),
   CONSTRAINT `tb_pedido_ibfk_5` FOREIGN KEY (`pedido_titular`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bigbenca_bigbencao.tb_pedido: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `tb_pedido` DISABLE KEYS */;
@@ -193,7 +185,7 @@ INSERT INTO `tb_pedido_produto` (`id_pedido`, `id_produto`, `quantidade`) VALUES
 CREATE TABLE IF NOT EXISTS `tb_produto` (
   `id_produto` int(11) NOT NULL AUTO_INCREMENT,
   `nome_produto` varchar(200) NOT NULL,
-  `valor` double NOT NULL DEFAULT 0,
+  `valor` double NOT NULL DEFAULT '0',
   `quantidade` int(11) DEFAULT NULL,
   `id_tipo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_produto`),
@@ -353,6 +345,27 @@ INSERT INTO `tb_usuario` (`id_usuario`, `nome_usuario`, `cpf`, `telefone`, `senh
 	(1, 'simone', '05632009793', '983537252', 'simone123456', 0, 1, 1);
 /*!40000 ALTER TABLE `tb_usuario` ENABLE KEYS */;
 
+-- Copiando estrutura para tabela bigbenca_bigbencao.tb_usuario_endereco
+CREATE TABLE IF NOT EXISTS `tb_usuario_endereco` (
+  `id_usuendereco` int(11) NOT NULL AUTO_INCREMENT,
+  `iduser` int(11) unsigned NOT NULL DEFAULT '0',
+  `idendereco` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_usuendereco`),
+  KEY `FK1user` (`iduser`),
+  KEY `FK2endereco` (`idendereco`),
+  CONSTRAINT `FK1user` FOREIGN KEY (`iduser`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK2endereco` FOREIGN KEY (`idendereco`) REFERENCES `tb_endereco` (`id_endereco`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela bigbenca_bigbencao.tb_usuario_endereco: ~4 rows (aproximadamente)
+/*!40000 ALTER TABLE `tb_usuario_endereco` DISABLE KEYS */;
+INSERT INTO `tb_usuario_endereco` (`id_usuendereco`, `iduser`, `idendereco`) VALUES
+	(1, 13, 6),
+	(2, 13, 8),
+	(4, 14, 5),
+	(5, 14, 1);
+/*!40000 ALTER TABLE `tb_usuario_endereco` ENABLE KEYS */;
+
 -- Copiando estrutura para tabela bigbenca_bigbencao.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -374,6 +387,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `company` int(11) DEFAULT NULL,
   `ip_address` varchar(45) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
+  `idendereco` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uc_email` (`email`),
   UNIQUE KEY `uc_activation_selector` (`activation_selector`),
@@ -383,15 +397,15 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Copiando dados para a tabela bigbenca_bigbencao.users: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `activation_selector`, `activation_code`, `forgotten_password_selector`, `forgotten_password_code`, `forgotten_password_time`, `remember_selector`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `ip_address`, `phone`) VALUES
-	(1, 'administrador', '$2y$12$wOMnvKlKM6iPK0VVDPZIuuoAMfAga.LIm2Zll.Jv7pVjNfa0y9XaC', 'admin@admin.com', NULL, '', NULL, NULL, NULL, '4fe7ba3d098f05f721d6ec5515ef11d9b9e26dfd', '$2y$10$.HZ75hwfS0ecazjCVr5c8.hkjFgtpDPMgivpStFkMJdZOqUO8LNya', 1268889823, 1589728291, 1, 'Admin', 'istrator', 0, '127.0.0.1', '0'),
-	(2, 'Usuario', '$2y$10$j9xhyIaWnkLyqEzJTbYuO.Gb0EgA0DqaO0fkCNWFj1jCjKxJDlATW', 'user.teste', NULL, NULL, NULL, NULL, NULL, '79e45015dd962fb4db849dce187299e1b890fccd', '$2y$10$vZi45O7SSqQHLfkXLrGxNuI8/yl2WkqonbSWQALyTEkTv3gmQGEyu', 1588445433, 1588451841, 1, 'benedmunds', 'Edmunds', 2, '127.0.0.1', NULL),
-	(3, 'Simone', '$2y$12$hA/Znq3eLA9MrfMX5aF3QubEEoOjhPtURM4Qxu2KfjQZvArCzzwou', 'simone_admin', NULL, NULL, NULL, NULL, NULL, '0e4dc15808773e66fa20e4cb37c6a60ec303554f', '$2y$10$UZ2dlBdgUqZHC0Ubj86uWelCtriFShzh6IPEveCWZJqCKhzamvQUy', 1588451055, 1596253627, 1, 'Simone', NULL, 1, '127.0.0.1', NULL),
-	(4, 'Vinicius', '$2y$12$YuorFj.plCqndMTdyI1OpeCi8DKS61dDgO2yQLte4UubZgxhN/T9q', 'vinicius_admin', NULL, NULL, NULL, NULL, NULL, '60c1596b88dff118befb833da9912e4e5e042c01', '$2y$10$MQk0FzjiAEZkAMfPgmujIuF2cWCS01zw/LtOzTSSEkZHRdX8/pP9q', 1588451316, 1596258824, 1, 'Vinicius', NULL, 2, '127.0.0.1', NULL),
-	(6, 'Julia', '$2y$10$A2DDv70qS3bGlhE/i51Ia.sRepbRHvdxmeAj2r1D4gM4dD27/kojO', 'jujuba', NULL, NULL, NULL, NULL, NULL, 'f87cad5ed2ac57faba8592f476ffa2b7523ed776', '$2y$10$NGGMNFmSpF/Y9PW6vXTbmOcYhzNGk3IgWGtuCNhGi5.9rN3R5Ecuy', 1588453454, 1596258710, 1, 'Julia', NULL, 1, '127.0.0.1', NULL),
-	(7, 'Juliana', '$2y$12$Hg70UGdNkywX8e00nUnZeevusko2PtBMkghYejPwEjKzJLtWaHo9.', 'juliana.rosa', NULL, NULL, NULL, NULL, NULL, '3296643643040277108be8108f6badb00fa5e09e', NULL, 1588456049, 1596133925, 1, 'Juliana', NULL, 2, '127.0.0.1', NULL),
-	(13, 'Cliente teste1', '$2y$10$qCe1dRczBxAXiAXWFWBpoebO5WK5cb5unT.cajPSt9a9W80NNMZEq', 'cli.teste1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1595554689, NULL, 1, NULL, NULL, NULL, '127.0.0.1', '98498498'),
-	(14, 'cliente dois', '$2y$10$hAYOpQkYR7qWT1pm3hcgFeepe3OJTPj3xiK3uWAK9KskTS/ZTzr9K', 'cliente.dois', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1596137640, NULL, 1, NULL, NULL, NULL, '127.0.0.1', '98765132198');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `activation_selector`, `activation_code`, `forgotten_password_selector`, `forgotten_password_code`, `forgotten_password_time`, `remember_selector`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `ip_address`, `phone`, `idendereco`) VALUES
+	(1, 'administrador', '$2y$12$wOMnvKlKM6iPK0VVDPZIuuoAMfAga.LIm2Zll.Jv7pVjNfa0y9XaC', 'admin@admin.com', NULL, '', NULL, NULL, NULL, '4fe7ba3d098f05f721d6ec5515ef11d9b9e26dfd', '$2y$10$.HZ75hwfS0ecazjCVr5c8.hkjFgtpDPMgivpStFkMJdZOqUO8LNya', 1268889823, 1589728291, 1, 'Admin', 'istrator', 0, '127.0.0.1', '0', NULL),
+	(2, 'Usuario', '$2y$10$j9xhyIaWnkLyqEzJTbYuO.Gb0EgA0DqaO0fkCNWFj1jCjKxJDlATW', 'user.teste', NULL, NULL, NULL, NULL, NULL, '79e45015dd962fb4db849dce187299e1b890fccd', '$2y$10$vZi45O7SSqQHLfkXLrGxNuI8/yl2WkqonbSWQALyTEkTv3gmQGEyu', 1588445433, 1588451841, 1, 'benedmunds', 'Edmunds', 2, '127.0.0.1', NULL, NULL),
+	(3, 'Simone', '$2y$12$hA/Znq3eLA9MrfMX5aF3QubEEoOjhPtURM4Qxu2KfjQZvArCzzwou', 'simone_admin', NULL, NULL, NULL, NULL, NULL, 'b202aeea3574447ac96af45d07f7a875de6814ed', '$2y$10$0GAZ1m1n6jfCIhFu/voFXOUGC8zHPb0llJ6vfJ0rusZfaTehCyP9K', 1588451055, 1596733412, 1, 'Simone', NULL, 1, '127.0.0.1', NULL, NULL),
+	(4, 'Vinicius', '$2y$12$YuorFj.plCqndMTdyI1OpeCi8DKS61dDgO2yQLte4UubZgxhN/T9q', 'vinicius_admin', NULL, NULL, NULL, NULL, NULL, '60c1596b88dff118befb833da9912e4e5e042c01', '$2y$10$MQk0FzjiAEZkAMfPgmujIuF2cWCS01zw/LtOzTSSEkZHRdX8/pP9q', 1588451316, 1596258824, 1, 'Vinicius', NULL, 2, '127.0.0.1', NULL, NULL),
+	(6, 'Julia', '$2y$10$A2DDv70qS3bGlhE/i51Ia.sRepbRHvdxmeAj2r1D4gM4dD27/kojO', 'jujuba', NULL, NULL, NULL, NULL, NULL, 'f87cad5ed2ac57faba8592f476ffa2b7523ed776', '$2y$10$NGGMNFmSpF/Y9PW6vXTbmOcYhzNGk3IgWGtuCNhGi5.9rN3R5Ecuy', 1588453454, 1596258710, 1, 'Julia', NULL, 1, '127.0.0.1', NULL, NULL),
+	(7, 'Juliana', '$2y$12$Hg70UGdNkywX8e00nUnZeevusko2PtBMkghYejPwEjKzJLtWaHo9.', 'juliana.rosa', NULL, NULL, NULL, NULL, NULL, '3296643643040277108be8108f6badb00fa5e09e', NULL, 1588456049, 1596133925, 1, 'Juliana', NULL, 2, '127.0.0.1', NULL, NULL),
+	(13, 'Cliente teste1', '$2y$10$qCe1dRczBxAXiAXWFWBpoebO5WK5cb5unT.cajPSt9a9W80NNMZEq', 'cli.teste1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1595554689, NULL, 1, NULL, NULL, NULL, '127.0.0.1', '98498498', NULL),
+	(14, 'cliente dois', '$2y$10$hAYOpQkYR7qWT1pm3hcgFeepe3OJTPj3xiK3uWAK9KskTS/ZTzr9K', 'cliente.dois', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1596137640, NULL, 1, NULL, NULL, NULL, '127.0.0.1', '98765132198', NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bigbenca_bigbencao.users_groups
